@@ -74,6 +74,14 @@
     <IncludePath>C:\boost_1_86_0;$(IncludePath)</IncludePath>
     <LibraryPath>C:\boost_1_86_0\stage\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>C:\boost_1_86_0;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\boost_1_86_0\stage\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>C:\boost_1_86_0;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\boost_1_86_0\stage\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -112,6 +120,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -128,10 +137,24 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CommandLine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PingAction.cpp" />
+    <ClCompile Include="ServerInfoAction.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ClientSideActionExecutor.h" />
+    <ClInclude Include="CommandLine.h" />
+    <ClInclude Include="Deserializer.h" />
+    <ClInclude Include="Macro.h" />
+    <ClInclude Include="PingAction.h" />
+    <ClInclude Include="Protocol.h" />
+    <ClInclude Include="Serializer.h" />
+    <ClInclude Include="ServerInfoAction.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
