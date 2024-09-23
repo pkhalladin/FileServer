@@ -2,7 +2,7 @@
 #include <stdint.h>
 #include <boost/date_time.hpp>
 
-uint64_t MakeId(const char* symbol)
+static uint64_t MakeId(const char* symbol)
 {
 	uint64_t id = 1, c;
 	while ((c = *symbol++) != 0)

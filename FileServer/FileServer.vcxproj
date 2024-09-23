@@ -142,19 +142,25 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CommandLine.cpp" />
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PingAction.cpp" />
     <ClCompile Include="ServerInfoAction.cpp" />
+    <ClCompile Include="TcpConnection.cpp" />
+    <ClCompile Include="TcpServer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClientSideActionExecutor.h" />
     <ClInclude Include="CommandLine.h" />
     <ClInclude Include="Deserializer.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="Macro.h" />
     <ClInclude Include="PingAction.h" />
     <ClInclude Include="Protocol.h" />
     <ClInclude Include="Serializer.h" />
     <ClInclude Include="ServerInfoAction.h" />
+    <ClInclude Include="TcpConnection.h" />
+    <ClInclude Include="TcpServer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

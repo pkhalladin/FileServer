@@ -1,5 +1,6 @@
 #include <iostream>
 #include "CommandLine.h"
+#include "TcpServer.h"
 
 using namespace std;
 
@@ -14,6 +15,11 @@ int main(int argc, char** argv)
 	{
 		return -1;
 	}
+
+	boost::asio::io_context context;
+	TcpServer server(context, commandLine.GetPort(), commandLine.IsRemote());
+
+	server.StartAccept();
 
 	return 0;
 }		
