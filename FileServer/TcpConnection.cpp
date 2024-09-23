@@ -1,4 +1,7 @@
 #include "TcpConnection.h"
+#include "Logger.h"
+
+using namespace std;
 
 TcpConnection::pointer TcpConnection::Create(boost::asio::ip::tcp::socket& socket)
 {
@@ -14,10 +17,18 @@ void TcpConnection::Start()
 {
     while (true)
     {
-        char data[4096];
+        try
+        {
+            char data[4096];
 
-        socket.write_some(boost::asio::buffer("AAA"));
-        socket.read_some(boost::asio::buffer(data, sizeof(data)));
+            size_t n = socket.read_some(boost::asio::buffer(data, sizeof(data)));
+            logger << string(data, n) << endl;
+        }
+        catch (std::exception& e)
+        {
+            logger << e.what() << std::endl;
+            break;
+        }
     }
 }
 
