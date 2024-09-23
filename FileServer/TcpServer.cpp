@@ -12,10 +12,11 @@ TcpServer::TcpServer(boost::asio::io_context& io_context, int port, bool isRemot
 
 void TcpServer::StartAccept()
 {
+	boost::asio::ip::tcp::socket socket(io_context);
 	while (true)
 	{
 		logger << "Waiting for connection..." << endl;
-		boost::asio::ip::tcp::socket socket = acceptor.accept();
+		socket = acceptor.accept(io_context);
 		logger << "Connection accepted..." << endl;
 		TcpConnection::pointer connection = TcpConnection::Create(socket);
 
