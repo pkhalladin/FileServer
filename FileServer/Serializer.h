@@ -1,5 +1,6 @@
 #pragma once
 #include <boost/asio.hpp>
+#include "Protocol.h"
 
 class Serializer
 {
@@ -7,12 +8,12 @@ public:
 	template <typename T>
 	static void ToSocket(boost::asio::ip::tcp::socket& socket, const T& instance)
 	{
-		static_assert(is_standard_layout<T>::value);
+		static_assert(std::is_standard_layout<T>::value);
 
 		size_t n = boost::asio::write(socket, boost::asio::buffer(&instance.header, sizeof(Header)));
 		if (n != sizeof(Header))
 		{
-			throw runtime_error("Failed to write header to socket");
+			throw std::runtime_error("Failed to write header to socket");
 		}
 		if (instance.header.hasPayload)
 		{
@@ -24,7 +25,7 @@ public:
 
 			if (n != sizeof(size_t))
 			{
-				throw runtime_error("Failed to write payload size to socket");
+				throw std::runtime_error("Failed to write payload size to socket");
 			}
 
 			for (size_t i = 0; i < payloadSize; i++)
@@ -34,14 +35,14 @@ public:
 
 				if (n != sizeof(size_t))
 				{
-					throw runtime_error("Failed to write payload item size to socket");
+					throw std::runtime_error("Failed to write payload item size to socket");
 				}
 
 				n = boost::asio::write(socket, boost::asio::buffer(payload[i].data, payloadItemSize));
 
 				if (n != payloadItemSize)
 				{
-					throw runtime_error("Failed to write payload item to socket");
+					throw std::runtime_error("Failed to write payload item to socket");
 				}
 			}
 		}

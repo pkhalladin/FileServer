@@ -8,14 +8,14 @@ public:
 	template <typename T>
 	static std::shared_ptr<T> FromSocket(boost::asio::ip::tcp::socket& socket)
 	{
-		static_assert(is_standard_layout<T>::value);
+		static_assert(std::is_standard_layout<T>::value);
 
 		T* instance = new T();
 		size_t n = boost::asio::read(socket, boost::asio::buffer(&instance->header, sizeof(Header)));
 		if (n != sizeof(Header))
 		{
 			delete instance;
-			throw runtime_error("Failed to read header from socket");
+			throw std::runtime_error("Failed to read header from socket");
 		}
 		if (instance->header.hasPayload)
 		{
@@ -25,7 +25,7 @@ public:
 			if (n != sizeof(size_t))
 			{
 				delete instance;
-				throw runtime_error("Failed to read payload size from socket");
+				throw std::runtime_error("Failed to read payload size from socket");
 			}
 
 			Payload payload(payloadSize);
@@ -38,7 +38,7 @@ public:
 				if (n != sizeof(size_t))
 				{
 					delete instance;
-					throw runtime_error("Failed to read payload item size from socket");
+					throw std::runtime_error("Failed to read payload item size from socket");
 				}
 
 				payload[i].size = payloadItemSize;
@@ -49,7 +49,7 @@ public:
 				if (n != payloadItemSize)
 				{
 					delete instance;
-					throw runtime_error("Failed to read payload item from socket");
+					throw std::runtime_error("Failed to read payload item from socket");
 				}
 			}
 
@@ -60,7 +60,7 @@ public:
 				delete[] payload[i].data;
 			}
 		}
-		return shared_ptr<T>(instance);
+		return std::shared_ptr<T>(instance);
 	}
 };
 

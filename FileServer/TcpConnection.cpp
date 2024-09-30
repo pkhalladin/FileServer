@@ -1,5 +1,6 @@
 #include "TcpConnection.h"
 #include "Logger.h"
+#include "ServerSideActionExecutor.h"
 
 using namespace std;
 
@@ -19,10 +20,7 @@ void TcpConnection::Start()
     {
         try
         {
-            char data[4096];
-
-            size_t n = socket.read_some(boost::asio::buffer(data, sizeof(data)));
-            logger << string(data, n) << endl;
+            
         }
         catch (std::exception& e)
         {

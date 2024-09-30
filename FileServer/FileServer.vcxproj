@@ -146,6 +146,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PingAction.cpp" />
     <ClCompile Include="ServerInfoAction.cpp" />
+    <ClCompile Include="ServerSideActionExecutor.cpp" />
     <ClCompile Include="TcpConnection.cpp" />
     <ClCompile Include="TcpServer.cpp" />
   </ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="Protocol.h" />
     <ClInclude Include="Serializer.h" />
     <ClInclude Include="ServerInfoAction.h" />
+    <ClInclude Include="ServerSideActionExecutor.h" />
     <ClInclude Include="TcpConnection.h" />
     <ClInclude Include="TcpServer.h" />
   </ItemGroup>
