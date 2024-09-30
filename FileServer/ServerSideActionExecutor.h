@@ -13,7 +13,7 @@ public:
 	static std::shared_ptr<Header> ReadHeader(boost::asio::ip::tcp::socket& socket)
 	{
 		Header *header = new Header();
-		size_t n = boost::asio::read(socket, boost::asio::buffer(&header, sizeof(Header)));
+		size_t n = boost::asio::read(socket, boost::asio::buffer(header, sizeof(Header)));
 		if (n != sizeof(Header))
 		{
 			delete header;
@@ -22,10 +22,10 @@ public:
 		return std::shared_ptr<Header>(header);
 	}
 
-	static std::shared_ptr<ResponseType> Execute(
-		boost::asio::ip::tcp::socket& socket, RequestFunction requestFunction)
+	static std::shared_ptr<ResponseType> Execute(boost::asio::ip::tcp::socket& socket, 
+		std::shared_ptr<Header> header, RequestFunction requestFunction)
 	{
-		std::shared_ptr<RequestType> request = Deserializer::FromSocket<RequestType>(socket);
+		std::shared_ptr<RequestType> request = Deserializer::FromSocket<RequestType>(socket, header);
 		return requestFunction(*request);
 	}
 };

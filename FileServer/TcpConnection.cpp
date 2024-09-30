@@ -29,6 +29,9 @@ void TcpConnection::Start()
             if (header->id == MAKE_ID(PingRequest))
             {
                 logger << "PingRequest" << endl;
+                ServerSideActionExecutor<PingAction>::Execute(socket, header, [](const PingRequest& request) {
+                    return shared_ptr<PingResponse>(new PingResponse());
+                });
             }
             else if (header->id == MAKE_ID(ServerInfoRequest))
             {
