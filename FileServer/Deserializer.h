@@ -6,16 +6,25 @@ class Deserializer
 {
 public:
 	template <typename T>
-	static std::shared_ptr<T> FromSocket(boost::asio::ip::tcp::socket& socket)
+	static std::shared_ptr<T> FromSocket(boost::asio::ip::tcp::socket& socket, const Header* header = nullptr)
 	{
 		static_assert(std::is_standard_layout<T>::value);
 
 		T* instance = new T();
-		size_t n = boost::asio::read(socket, boost::asio::buffer(&instance->header, sizeof(Header)));
-		if (n != sizeof(Header))
+		size_t n;
+
+		if (header == nullptr)
 		{
-			delete instance;
-			throw std::runtime_error("Failed to read header from socket");
+			n = boost::asio::read(socket, boost::asio::buffer(&instance->header, sizeof(Header)));
+			if (n != sizeof(Header))
+			{
+				delete instance;
+				throw std::runtime_error("Failed to read header from socket");
+			}
+		}
+		else
+		{
+			instance->header = *header;
 		}
 		if (instance->header.hasPayload)
 		{

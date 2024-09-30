@@ -144,6 +144,7 @@
     <ClCompile Include="CommandLine.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NoneAction.cpp" />
     <ClCompile Include="PingAction.cpp" />
     <ClCompile Include="ServerInfoAction.cpp" />
     <ClCompile Include="ServerSideActionExecutor.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Deserializer.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Macro.h" />
+    <ClInclude Include="NoneAction.h" />
     <ClInclude Include="PingAction.h" />
     <ClInclude Include="Protocol.h" />
     <ClInclude Include="Serializer.h" />

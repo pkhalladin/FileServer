@@ -8,7 +8,7 @@ struct Header
 	uint64_t creationMoment;
 	bool hasPayload;
 
-	Header(uint64_t id) : id(id), creationMoment(NOW_MICROSECONDS()), hasPayload(false)
+	Header(uint64_t id = 0L) : id(id), creationMoment(NOW_MICROSECONDS()), hasPayload(false)
 	{
 	}
 };

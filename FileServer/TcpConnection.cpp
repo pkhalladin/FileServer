@@ -1,8 +1,12 @@
 #include "TcpConnection.h"
 #include "Logger.h"
 #include "ServerSideActionExecutor.h"
+#include "NoneAction.h"
+#include "PingAction.h"
+#include "ServerInfoAction.h"
 
 using namespace std;
+using namespace boost::asio;
 
 TcpConnection::pointer TcpConnection::Create(boost::asio::ip::tcp::socket& socket)
 {
@@ -20,7 +24,12 @@ void TcpConnection::Start()
     {
         try
         {
-            
+            shared_ptr<Header> header = ServerSideActionExecutor<NoneAction>::ReadHeader(socket);
+
+            if (header->id == MAKE_ID(PingRequest))
+            {
+                write(socket, buffer("PING"));
+            }
         }
         catch (std::exception& e)
         {
