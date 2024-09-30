@@ -28,7 +28,11 @@ void TcpConnection::Start()
 
             if (header->id == MAKE_ID(PingRequest))
             {
-                write(socket, buffer("PING"));
+                logger << "PingRequest" << endl;
+            }
+            else if (header->id == MAKE_ID(ServerInfoRequest))
+            {
+                logger << "ServerInfoRequest" << endl;
             }
         }
         catch (std::exception& e)
