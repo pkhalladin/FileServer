@@ -9,7 +9,7 @@ public:
 	typedef typename TAction::RequestType RequestType;
 	typedef typename TAction::ResponseType ResponseType;
 
-	static shared_ptr<ResponseType> Execute(
+	static std::shared_ptr<ResponseType> Execute(
 		boost::asio::ip::tcp::socket& socket, const RequestType& request)
 	{
 		Serializer::ToSocket(socket, request);

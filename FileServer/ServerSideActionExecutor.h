@@ -26,6 +26,8 @@ public:
 		std::shared_ptr<Header> header, RequestFunction requestFunction)
 	{
 		std::shared_ptr<RequestType> request = Deserializer::FromSocket<RequestType>(socket, header);
-		return requestFunction(*request);
+		std::shared_ptr<ResponseType> response = requestFunction(*request);
+		Serializer::ToSocket(socket, *response);
+		return response;
 	}
 };
