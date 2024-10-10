@@ -6,7 +6,7 @@ class Deserializer
 {
 public:
 	template <typename T>
-	static std::shared_ptr<T> FromSocket(boost::asio::ip::tcp::socket& socket, const Header* header = nullptr)
+	static std::shared_ptr<T> FromSocket(boost::asio::ip::tcp::socket& socket, const std::shared_ptr<Header> header = nullptr)
 	{
 		static_assert(std::is_standard_layout<T>::value);
 

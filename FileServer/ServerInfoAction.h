@@ -7,6 +7,8 @@ struct ServerInfoRequest : public Request
 	ServerInfoRequest() : Request(MAKE_ID(ServerInfoRequest))
 	{
 	}
+
+	HAS_EMPTY_READ_WRITE_PAYLOAD_METHODS;
 };
 
 struct ServerInfoResponse : public Response

@@ -20,4 +20,7 @@ static uint64_t MakeId(const char* symbol)
 
 #define NOW_MICROSECONDS() (boost::posix_time::microsec_clock::universal_time().time_of_day().total_microseconds())
 
-// TODO: dodaæ makro HAS_EMPTY_READ_WRITE_PAYLOAD_METHODS
+#define HAS_EMPTY_READ_WRITE_PAYLOAD_METHODS \
+	void WritePayload(const Payload& payload) const { }\
+	void ReadPayload(Payload& payload) { }
+
