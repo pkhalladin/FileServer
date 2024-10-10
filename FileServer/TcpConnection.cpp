@@ -4,6 +4,7 @@
 #include "NoneAction.h"
 #include "PingAction.h"
 #include "ServerInfoAction.h"
+#include <boost/asio/ip/host_name.hpp>
 
 using namespace std;
 using namespace boost::asio;
@@ -36,6 +37,12 @@ void TcpConnection::Start()
             else if (header->id == MAKE_ID(ServerInfoRequest))
             {
                 logger << "ServerInfoRequest" << endl;
+				ServerSideActionExecutor<ServerInfoAction>::Execute(socket, header, [](const ServerInfoRequest& request) {
+					ServerInfoResponse* response = new ServerInfoResponse();
+					response->machineName = boost::asio::ip::host_name();
+					response->version = "1.0.0.0";
+					return shared_ptr<ServerInfoResponse>(response);
+					});
             }
         }
         catch (std::exception& e)
