@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Protocol.h"
+#include "Logger.h"
 
 struct PwdRequest : public Request
 {
@@ -17,6 +18,7 @@ struct PwdResponse : public Response
 
 	PwdResponse() : Response(MAKE_ID(PwdResponse))
 	{
+		header.hasPayload = true;
 	}
 
 	void ReadPayload(const Payload& payload)
