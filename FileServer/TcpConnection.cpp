@@ -66,7 +66,7 @@ void TcpConnection::Start()
 					if (boost::filesystem::exists(path)
 						&& boost::filesystem::is_directory(path))
 					{
-						workingDirectory = path.string();
+						workingDirectory = boost::filesystem::canonical(path).string();
 					}
 					response->path = workingDirectory;
 					return shared_ptr<CdResponse>(response);
