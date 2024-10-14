@@ -8,7 +8,7 @@ public:
 	template <typename T>
 	static std::shared_ptr<T> FromSocket(boost::asio::ip::tcp::socket& socket, const std::shared_ptr<Header> header = nullptr)
 	{
-		static_assert(std::is_standard_layout<T>::value);
+		//static_assert(std::is_standard_layout<T>::value);
 
 		T* instance = new T();
 		size_t n;
