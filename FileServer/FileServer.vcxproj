@@ -152,6 +152,7 @@
     <ClCompile Include="TcpServer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CdAction.h" />
     <ClInclude Include="ClientSideActionExecutor.h" />
     <ClInclude Include="CommandLine.h" />
     <ClInclude Include="Deserializer.h" />
