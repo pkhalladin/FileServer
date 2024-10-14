@@ -12,6 +12,7 @@ public:
 	void Start();
 private:
 	boost::asio::ip::tcp::socket& socket;
+	std::string workingDirectory = "C:/";
 
 	TcpConnection(boost::asio::ip::tcp::socket& socket);
 };

@@ -4,6 +4,7 @@
 #include "NoneAction.h"
 #include "PingAction.h"
 #include "ServerInfoAction.h"
+#include "PwdAction.h"
 #include <boost/asio/ip/host_name.hpp>
 
 using namespace std;
@@ -44,6 +45,19 @@ void TcpConnection::Start()
 					return shared_ptr<ServerInfoResponse>(response);
 					});
             }
+			else if (header->id == MAKE_ID(PwdRequest))
+			{
+				logger << "PwdRequest" << endl;
+				ServerSideActionExecutor<PwdAction>::Execute(socket, header, [&](const PwdRequest& request) {
+					PwdResponse* response = new PwdResponse();
+                    response->path = workingDirectory;
+					return shared_ptr<PwdResponse>(response);
+					});
+			}
+            else
+			{
+				logger << "Unknown request" << endl;
+			}
         }
         catch (std::exception& e)
         {

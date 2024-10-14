@@ -8,7 +8,7 @@ class ServerSideActionExecutor
 public:
 	typedef typename TAction::RequestType RequestType;
 	typedef typename TAction::ResponseType ResponseType;
-	typedef std::shared_ptr<ResponseType> (*RequestFunction)(const RequestType& request);
+	typedef std::function<std::shared_ptr<ResponseType>(const RequestType& request)> RequestFunction;
 
 	static std::shared_ptr<Header> ReadHeader(boost::asio::ip::tcp::socket& socket)
 	{

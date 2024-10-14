@@ -160,6 +160,7 @@
     <ClInclude Include="NoneAction.h" />
     <ClInclude Include="PingAction.h" />
     <ClInclude Include="Protocol.h" />
+    <ClInclude Include="PwdAction.h" />
     <ClInclude Include="Serializer.h" />
     <ClInclude Include="ServerInfoAction.h" />
     <ClInclude Include="ServerSideActionExecutor.h" />
