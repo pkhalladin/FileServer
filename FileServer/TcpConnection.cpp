@@ -10,7 +10,7 @@
 #include <boost/asio/ip/host_name.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
-#include <boost/filesystem/directory.hpp>
+#include <boost/filesystem.hpp>
 
 using namespace std;
 using namespace boost::asio;
@@ -90,7 +90,7 @@ void TcpConnection::Start()
 						{
 							PathInfo pathInfo;
 							pathInfo.name = it->path().filename().string();
-							pathInfo.size = boost::filesystem::file_size(it->path());
+							pathInfo.size = 0L;  // boost::filesystem::file_size(it->path());
 							pathInfo.isDirectory = boost::filesystem::is_directory(it->path());
 							response->paths.push_back(pathInfo);
 						}
