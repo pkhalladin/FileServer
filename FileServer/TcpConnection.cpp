@@ -100,9 +100,9 @@ void TcpConnection::Start()
 								}
 								response->paths.push_back(pathInfo);
 							}
-							catch (std::exception& e)
+							catch (boost::filesystem::filesystem_error& e)
 							{
-								logger << typeid(e).name() << std::endl;
+								logger << e.what() << std::endl;
 							}
 						}
 					}
