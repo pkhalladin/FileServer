@@ -88,15 +88,22 @@ void TcpConnection::Start()
 						boost::filesystem::directory_iterator end;
 						for (boost::filesystem::directory_iterator it(path); it != end; ++it)
 						{
-							PathInfo pathInfo;
-							pathInfo.name = it->path().filename().string();
-							pathInfo.size = 0L;
-							pathInfo.isDirectory = boost::filesystem::is_directory(it->path());
-							if (!pathInfo.isDirectory)
+							try
 							{
-								pathInfo.size = boost::filesystem::file_size(it->path());
+								PathInfo pathInfo;
+								pathInfo.name = it->path().filename().string();
+								pathInfo.size = 0L;
+								pathInfo.isDirectory = boost::filesystem::is_directory(it->path());
+								if (!pathInfo.isDirectory)
+								{
+									pathInfo.size = boost::filesystem::file_size(it->path());
+								}
+								response->paths.push_back(pathInfo);
 							}
-							response->paths.push_back(pathInfo);
+							catch (std::exception& e)
+							{
+								logger << typeid(e).name() << std::endl;
+							}
 						}
 					}
 					return shared_ptr<ListResponse>(response);
