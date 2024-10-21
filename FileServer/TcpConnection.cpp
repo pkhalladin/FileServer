@@ -90,8 +90,12 @@ void TcpConnection::Start()
 						{
 							PathInfo pathInfo;
 							pathInfo.name = it->path().filename().string();
-							pathInfo.size = 0L;  // boost::filesystem::file_size(it->path());
+							pathInfo.size = 0L;
 							pathInfo.isDirectory = boost::filesystem::is_directory(it->path());
+							if (!pathInfo.isDirectory)
+							{
+								pathInfo.size = boost::filesystem::file_size(it->path());
+							}
 							response->paths.push_back(pathInfo);
 						}
 					}
