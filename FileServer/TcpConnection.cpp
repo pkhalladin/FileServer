@@ -6,9 +6,12 @@
 #include "ServerInfoAction.h"
 #include "PwdAction.h"
 #include "CdAction.h"
+#include "ListAction.h"
 #include <boost/asio/ip/host_name.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
+#include <boost/filesystem/directory.hpp>
+
 using namespace std;
 using namespace boost::asio;
 
@@ -70,6 +73,29 @@ void TcpConnection::Start()
 					}
 					response->path = workingDirectory;
 					return shared_ptr<CdResponse>(response);
+					});
+			}
+			else if (header->id == MAKE_ID(ListRequest))
+			{
+				logger << "ListRequest" << endl;
+				ServerSideActionExecutor<ListAction>::Execute(socket, header, [&](const ListRequest& request) {
+					ListResponse* response = new ListResponse();
+					boost::filesystem::path path = workingDirectory;
+					path /= request.path;
+					if (boost::filesystem::exists(path)
+						&& boost::filesystem::is_directory(path))
+					{
+						boost::filesystem::directory_iterator end;
+						for (boost::filesystem::directory_iterator it(path); it != end; ++it)
+						{
+							PathInfo pathInfo;
+							pathInfo.name = it->path().filename().string();
+							pathInfo.size = boost::filesystem::file_size(it->path());
+							pathInfo.isDirectory = boost::filesystem::is_directory(it->path());
+							response->paths.push_back(pathInfo);
+						}
+					}
+					return shared_ptr<ListResponse>(response);
 					});
 			}
 			else
