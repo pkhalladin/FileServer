@@ -55,6 +55,7 @@ struct FetchResponse : public Response
 	void WritePayload(Payload& payload) const
 	{
 		payload.push_back({ size, data.get() });
+		payload.push_back({ 1, (uint8_t*)&isOk });
 	}
 };
 
