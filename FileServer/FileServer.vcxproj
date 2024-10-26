@@ -157,6 +157,7 @@
     <ClInclude Include="ClientSideActionExecutor.h" />
     <ClInclude Include="CommandLine.h" />
     <ClInclude Include="Deserializer.h" />
+    <ClInclude Include="FetchAction.h" />
     <ClInclude Include="ListAction.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="Macro.h" />

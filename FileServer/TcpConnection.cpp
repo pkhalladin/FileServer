@@ -7,6 +7,7 @@
 #include "PwdAction.h"
 #include "CdAction.h"
 #include "ListAction.h"
+#include "FetchAction.h"
 #include <boost/asio/ip/host_name.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -107,6 +108,30 @@ void TcpConnection::Start()
 						}
 					}
 					return shared_ptr<ListResponse>(response);
+					});
+			}
+			else if (header->id == MAKE_ID(FetchRequest))
+			{
+				logger << "FetchRequest" << endl;
+				ServerSideActionExecutor<FetchAction>::Execute(socket, header, [&](const FetchRequest& request) {
+					FetchResponse* response = new FetchResponse();
+					boost::filesystem::path path = workingDirectory;
+					path /= request.path;
+					if (boost::filesystem::exists(path)
+						&& boost::filesystem::is_regular_file(path))
+					{
+						std::ifstream file(path.string(), std::ios::binary);
+						if (file.is_open())
+						{
+							file.seekg(0, std::ios::end);
+							size_t size = file.tellg();
+							file.seekg(0, std::ios::beg);
+							response->data = std::shared_ptr<uint8_t[]>(new uint8_t[size]);
+							file.read((char*)response->data.get(), size);
+							file.close();
+						}
+					}
+					return shared_ptr<FetchResponse>(response);
 					});
 			}
 			else
