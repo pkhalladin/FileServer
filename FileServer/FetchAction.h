@@ -41,7 +41,7 @@ struct FetchResponse : public Response
 
 	void ReadPayload(const Payload& payload)
 	{
-		if (payload.size() != 1)
+		if (payload.size() != 2)
 		{
 			throw std::runtime_error("Invalid payload size");
 		}
