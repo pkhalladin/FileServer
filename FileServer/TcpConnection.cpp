@@ -124,10 +124,10 @@ void TcpConnection::Start()
 						if (file.is_open())
 						{
 							file.seekg(0, std::ios::end);
-							size_t size = file.tellg();
+							response->size = file.tellg();
 							file.seekg(0, std::ios::beg);
-							response->data = std::shared_ptr<uint8_t[]>(new uint8_t[size]);
-							file.read((char*)response->data.get(), size);
+							response->data = std::shared_ptr<uint8_t[]>(new uint8_t[response->size]);
+							file.read((char*)response->data.get(), response->size);
 							file.close();
 						}
 					}

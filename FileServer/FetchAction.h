@@ -31,8 +31,9 @@ struct FetchRequest : public Request
 struct FetchResponse : public Response
 {
 	std::shared_ptr<uint8_t[]> data;
-	
-	FetchResponse() : Response(MAKE_ID(FetchResponse))
+	uint64_t size;
+
+	FetchResponse() : Response(MAKE_ID(FetchResponse)), size(0)
 	{
 		header.hasPayload = true;
 	}
@@ -45,12 +46,13 @@ struct FetchResponse : public Response
 		}
 
 		data = std::shared_ptr<uint8_t[]>(new uint8_t[payload[0].size]);
+		size = payload[0].size;
 		memcpy(data.get(), payload[0].data, payload[0].size);
 	}
 
 	void WritePayload(Payload& payload) const
 	{
-		payload.push_back({ sizeof(uint8_t), data.get()});
+		payload.push_back({ size, data.get() });
 	}
 };
 
