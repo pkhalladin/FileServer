@@ -32,8 +32,9 @@ struct FetchResponse : public Response
 {
 	std::shared_ptr<uint8_t[]> data;
 	uint64_t size;
+	bool isOk;
 
-	FetchResponse() : Response(MAKE_ID(FetchResponse)), size(0)
+	FetchResponse() : Response(MAKE_ID(FetchResponse)), size(0), isOk(false)
 	{
 		header.hasPayload = true;
 	}
@@ -48,6 +49,7 @@ struct FetchResponse : public Response
 		data = std::shared_ptr<uint8_t[]>(new uint8_t[payload[0].size]);
 		size = payload[0].size;
 		memcpy(data.get(), payload[0].data, payload[0].size);
+		isOk = (bool)payload[1].data[0];
 	}
 
 	void WritePayload(Payload& payload) const

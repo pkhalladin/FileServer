@@ -115,6 +115,7 @@ void TcpConnection::Start()
 				logger << "FetchRequest" << endl;
 				ServerSideActionExecutor<FetchAction>::Execute(socket, header, [&](const FetchRequest& request) {
 					FetchResponse* response = new FetchResponse();
+					response->isOk = false;
 					boost::filesystem::path path = workingDirectory;
 					path /= request.path;
 					if (boost::filesystem::exists(path)
@@ -129,6 +130,7 @@ void TcpConnection::Start()
 							response->data = std::shared_ptr<uint8_t[]>(new uint8_t[response->size]);
 							file.read((char*)response->data.get(), response->size);
 							file.close();
+							response->isOk = true;
 						}
 					}
 					return shared_ptr<FetchResponse>(response);
